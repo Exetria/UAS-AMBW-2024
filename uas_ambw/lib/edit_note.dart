@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uas_ambw/home.dart';
+import 'package:uas_ambw/layouts/navbar.dart';
 
 class EditNote extends StatefulWidget {
   const EditNote({super.key});
@@ -12,10 +13,7 @@ class _EditNote extends State<EditNote> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text("Add Note - Vincentius I. Tiro"),
-      ),
+      appBar: navbar(context),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

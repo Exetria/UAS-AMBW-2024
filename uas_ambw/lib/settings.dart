@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:uas_ambw/home.dart';
+import 'package:uas_ambw/layouts/navbar.dart';
 import 'package:uas_ambw/login.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -133,38 +133,35 @@ class _Settings extends State<Settings> {
     );
   }
 
+  void logOutPopup() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              title: Text('Log Out'),
+              content: Column(mainAxisSize: MainAxisSize.min, children: []),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Cancel'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => LoginPage()));
+                  },
+                  child: Text("Log Out"),
+                )
+              ]);
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(60.0),
-        child: Container(
-          decoration: const BoxDecoration(
-            color: Colors.lightBlue,
-            border: Border(
-              bottom: BorderSide(
-                color: Colors.grey,
-                width: 1.0,
-              ),
-            ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                BackButton(
-                  color: Colors.white,
-                  onPressed: () {
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => Home()));
-                  },
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
+      appBar: navbar(context),
       body: Center(
         child: Padding(
           padding: EdgeInsets.symmetric(
@@ -217,8 +214,7 @@ class _Settings extends State<Settings> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) => LoginPage()));
+                      logOutPopup();
                     },
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.symmetric(

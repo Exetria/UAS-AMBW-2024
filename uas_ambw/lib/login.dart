@@ -150,6 +150,8 @@ class _LoginPage extends State<LoginPage> {
                       ElevatedButton(
                         onPressed: () {
                           checkPin(context);
+              //             Navigator.pushReplacement(
+              // context, MaterialPageRoute(builder: (context) => Home()));
                         },
                         child: Text('Login'),
                       ),

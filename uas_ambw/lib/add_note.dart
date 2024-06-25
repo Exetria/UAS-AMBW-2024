@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:uas_ambw/home.dart';
+import 'package:uas_ambw/layouts/navbar.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class AddNote extends StatefulWidget {
   const AddNote({super.key});
@@ -9,34 +11,83 @@ class AddNote extends StatefulWidget {
 }
 
 class _AddNote extends State<AddNote> {
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController contentController = TextEditingController();
+
+  Future<void> saveNote(BuildContext context) async
+  {
+    final box = await Hive.openBox('notes');
+
+    box.put(box.length+1, [titleController.text, contentController.text]);
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => Home()),
+    );
+  }
+
+  @override
+  void dispose() {
+    titleController.dispose();
+    contentController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text("Add Note - Vincentius I. Tiro"),
-      ),
-      body: Center(
+      appBar: navbar(context),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'Hello',
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              children: [
+                TextField(
+                  controller: titleController,
+                  decoration: InputDecoration(
+                    labelText: 'Title',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.02,
+                ),
+                TextField(
+                  controller: contentController,
+                  decoration: InputDecoration(
+                    labelText: 'Content',
+                    border: OutlineInputBorder(),
+                  ),
+                  maxLines: 20,
+                ),
+              ],
             ),
-            Text(
-              '',
-              style: Theme.of(context).textTheme.headlineMedium,
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.07,
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.height * 0.02),
+              child: ElevatedButton(
+                onPressed: () {
+                  saveNote(context);
+                },
+                style: ElevatedButton.styleFrom(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
+                ),
+                child: Text(
+                  'Save Note',
+                  style: TextStyle(
+                    color: Colors.blue,
+                  ),
+                ),
+              ),
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => Home()));
-        },
-        tooltip: 'Add Note',
-        child: const Icon(Icons.add),
       ),
     );
   }

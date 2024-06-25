@@ -13,7 +13,7 @@ class Settings extends StatefulWidget {
 
 class _Settings extends State<Settings> {
   Future<void> changePin(BuildContext context, String newPin) async {
-    final box = await Hive.openBox('pin');
+    final box = Hive.box('pin');
 
     box.put(0, newPin);
 
@@ -173,13 +173,13 @@ class _Settings extends State<Settings> {
               Column(
                 children: [
                   const CircleAvatar(
-                    radius: 40.0, // Adjust the radius as needed
+                    radius: 40.0,
                     backgroundImage: NetworkImage(
-                        'https://www.example.com/profile_picture.png'), // Replace with your image URL
+                        ''), 
                   ),
                   SizedBox(
                       height: MediaQuery.of(context).size.width *
-                          0.03), // Space between the profile picture and "Hi"
+                          0.03),
                   Text(
                     'Hello',
                     style: Theme.of(context).textTheme.headlineMedium,
@@ -200,12 +200,12 @@ class _Settings extends State<Settings> {
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.symmetric(
                           horizontal: 40.0,
-                          vertical: 20.0), // Make the button bigger
+                          vertical: 20.0),
                     ),
                     child: Text(
                       'Change PIN',
                       style: TextStyle(
-                        color: Colors.blue, // Text color
+                        color: Colors.blue,
                       ),
                     ),
                   ),
@@ -219,12 +219,12 @@ class _Settings extends State<Settings> {
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.symmetric(
                           horizontal: 40.0,
-                          vertical: 20.0), // Make the button bigger
+                          vertical: 20.0),
                     ),
                     child: Text(
                       'Log Out',
                       style: TextStyle(
-                        color: Colors.red, // Text color
+                        color: Colors.red,
                       ),
                     ),
                   ),

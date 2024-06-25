@@ -47,7 +47,7 @@ class _LoginPage extends State<LoginPage> {
   }
 
   Future<void> createPin(BuildContext context) async {
-    final box = await Hive.openBox('pin');
+    final box = Hive.box('pin');
 
     box.put(0, pinController.text);
 
@@ -149,9 +149,9 @@ class _LoginPage extends State<LoginPage> {
                           height: MediaQuery.of(context).size.width * 0.03),
                       ElevatedButton(
                         onPressed: () {
-                          checkPin(context);
-              //             Navigator.pushReplacement(
-              // context, MaterialPageRoute(builder: (context) => Home()));
+              //             checkPin(context);
+                          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => Home()));
                         },
                         child: Text('Login'),
                       ),

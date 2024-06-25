@@ -21,6 +21,7 @@ void main() async{
   //open box
   var box = Hive.openBox("notes");
   var pinBox = Hive.openBox("pin");
+  var idBox = Hive.openBox("id");
 
   runApp(const MyApp());
 }

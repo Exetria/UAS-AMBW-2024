@@ -17,8 +17,17 @@ class _AddNote extends State<AddNote> {
   Future<void> saveNote(BuildContext context) async
   {
     final box = await Hive.openBox('notes');
+    final idBox = await Hive.openBox('id');
 
-    box.put(box.length+1, [titleController.text, contentController.text]);
+    if(idBox.get(0) == null)
+    {
+      idBox.put(0, 0);
+    }
+    
+    final int nextId = idBox.get(0);
+
+    box.put(nextId, [titleController.text, contentController.text, DateTime.now(), contentController.text, DateTime.now()]);
+    idBox.put(0, nextId+1);
 
     Navigator.pushReplacement(
       context,

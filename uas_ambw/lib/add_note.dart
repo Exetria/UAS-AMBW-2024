@@ -25,8 +25,9 @@ class _AddNote extends State<AddNote> {
     }
     
     final int nextId = idBox.get(0);
+    final DateTime date = DateTime.now();
 
-    box.put(nextId, [titleController.text, contentController.text, DateTime.now(), contentController.text, DateTime.now()]);
+    box.put(nextId, [titleController.text, contentController.text, date, date, nextId]);
     idBox.put(0, nextId+1);
 
     Navigator.pushReplacement(
@@ -53,6 +54,12 @@ class _AddNote extends State<AddNote> {
           children: [
             Column(
               children: [
+                Center(
+                  child: Text("Add Note", style: Theme.of(context).textTheme.titleLarge,),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.02,
+                ),
                 TextField(
                   controller: titleController,
                   decoration: InputDecoration(
@@ -69,7 +76,7 @@ class _AddNote extends State<AddNote> {
                     labelText: 'Content',
                     border: OutlineInputBorder(),
                   ),
-                  maxLines: 20,
+                  maxLines: 15,
                 ),
               ],
             ),

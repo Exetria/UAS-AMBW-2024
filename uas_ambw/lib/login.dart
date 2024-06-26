@@ -149,9 +149,7 @@ class _LoginPage extends State<LoginPage> {
                           height: MediaQuery.of(context).size.width * 0.03),
                       ElevatedButton(
                         onPressed: () {
-              //             checkPin(context);
-                          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => Home()));
+                          checkPin(context);
                         },
                         child: Text('Login'),
                       ),

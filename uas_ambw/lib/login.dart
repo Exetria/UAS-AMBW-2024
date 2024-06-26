@@ -31,7 +31,7 @@ class _LoginPage extends State<LoginPage> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text('Incorrect PIN'),
-            content: Text('Please enter the correct PIN.'),
+            content: Text('Please enter the correct PIN'),
             actions: <Widget>[
               TextButton(
                 child: Text('OK'),
@@ -49,12 +49,32 @@ class _LoginPage extends State<LoginPage> {
   Future<void> createPin(BuildContext context) async {
     final box = Hive.box('pin');
 
-    box.put(0, pinController.text);
+    if (pinController.text.length != 6) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('PIN Not Valid'),
+            content: Text('Please make a 6 digit PIN'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      box.put(0, pinController.text);
 
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => Home()),
-    );
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Home()),
+      );
+    }
   }
 
   Future<String?> checkPinExist() async {
@@ -81,83 +101,57 @@ class _LoginPage extends State<LoginPage> {
             return Center(child: Text('Error loading data'));
           } else {
             bool result = snapshot.data == null;
-            if (result) {
-              return Scaffold(
-                body: Padding(
-                  padding:
-                      EdgeInsets.all(MediaQuery.of(context).size.width * 0.03),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal:
-                                MediaQuery.of(context).size.width * 0.35),
-                        child: TextField(
-                          controller: pinController,
-                          obscureText: true,
-                          keyboardType: TextInputType.number,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly,
-                            LengthLimitingTextInputFormatter(6)
-                          ],
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Enter a new PIN',
-                          ),
+            return Scaffold(
+              body: Padding(
+                padding:
+                    EdgeInsets.all(MediaQuery.of(context).size.width * 0.03),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Welcome to Notes App",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: MediaQuery.of(context).size.width * 0.05,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.width * 0.03),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width * 0.2),
+                      child: TextField(
+                        controller: pinController,
+                        obscureText: true,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          LengthLimitingTextInputFormatter(6)
+                        ],
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText:
+                              result ? 'Enter a new PIN' : 'Enter your PIN',
                         ),
                       ),
-                      SizedBox(
-                          height: MediaQuery.of(context).size.width * 0.03),
-                      ElevatedButton(
-                        onPressed: () {
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.width * 0.015),
+                    ElevatedButton(
+                      onPressed: () {
+                        if (result) {
                           createPin(context);
-                        },
-                        child: Text('Create PIN'),
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            } else {
-              return Scaffold(
-                body: Padding(
-                  padding:
-                      EdgeInsets.all(MediaQuery.of(context).size.width * 0.03),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal:
-                                MediaQuery.of(context).size.width * 0.35),
-                        child: TextField(
-                          controller: pinController,
-                          obscureText: true,
-                          keyboardType: TextInputType.number,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly,
-                            LengthLimitingTextInputFormatter(6)
-                          ],
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Enter your PIN',
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                          height: MediaQuery.of(context).size.width * 0.03),
-                      ElevatedButton(
-                        onPressed: () {
+                        } else {
                           checkPin(context);
-                        },
-                        child: Text('Login'),
+                        }
+                      },
+                      child: Text(
+                        result ? 'Create PIN' : 'Log In',
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              );
-            }
+              ),
+            );
           }
         });
   }

@@ -18,10 +18,11 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     notesBox = Hive.box('notes');
-    // notesBox.clear();
+    // Hive.box('notes').clear();
+    // Hive.box('pin').clear();
+    // Hive.box('id').clear();
   }
 
-  @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +30,7 @@ class _HomeState extends State<Home> {
         preferredSize:
             Size.fromHeight(MediaQuery.of(context).size.height * 0.1),
         child: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Colors.lightBlue,
             border: Border(
               bottom: BorderSide(
@@ -50,12 +51,12 @@ class _HomeState extends State<Home> {
                   'My Notes',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: MediaQuery.of(context).size.width * 0.02,
+                    fontSize: MediaQuery.of(context).size.height * 0.04,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 IconButton(
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.settings,
                     color: Colors.white,
                   ),
@@ -75,24 +76,36 @@ class _HomeState extends State<Home> {
         valueListenable: notesBox.listenable(),
         builder: (context, Box box, _) {
           if (box.isEmpty) {
-            return Center(
+            return const Center(
               child: Text('No notes yet'),
             );
           } else {
-            return GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 5, // Number of columns
-                crossAxisSpacing: MediaQuery.of(context).size.width * 0.02,
-                mainAxisSpacing: MediaQuery.of(context).size.height * 0.02,
-                childAspectRatio:
-                    1.0, // Adjust as needed for your card dimensions
-              ),
-              padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.03),
-              itemCount: box.length,
-              itemBuilder: (context, index) {
-                final key = box.keyAt(index) as int;
-                final note = box.get(key) as List;
-                return noteCard(context, note);
+            return LayoutBuilder(
+              builder: (context, constraints) {
+                int crossAxisCount = 1;
+                if (constraints.maxWidth >= 1200) {
+                  crossAxisCount = 5;
+                } else if (constraints.maxWidth >= 800) {
+                  crossAxisCount = 3;
+                } else if (constraints.maxWidth >= 600) {
+                  crossAxisCount = 2;
+                }
+
+                return GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: crossAxisCount,
+                    crossAxisSpacing: constraints.maxWidth * 0.02,
+                    mainAxisSpacing: constraints.maxHeight * 0.02,
+                    childAspectRatio: 1.0,
+                  ),
+                  padding: EdgeInsets.all(constraints.maxWidth * 0.03),
+                  itemCount: box.length,
+                  itemBuilder: (context, index) {
+                    final key = box.keyAt(index) as int;
+                    final note = box.get(key) as List;
+                    return noteCard(context, note);
+                  },
+                );
               },
             );
           }
@@ -102,12 +115,12 @@ class _HomeState extends State<Home> {
         onPressed: () {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => AddNote()),
+            MaterialPageRoute(builder: (context) => AddNote()), // Assuming you have an AddNotePage
           );
         },
         tooltip: 'Add Note',
-        child: Icon(Icons.add),
-      ),
+        child: const Icon(Icons.add),
+      )
     );
   }
 }

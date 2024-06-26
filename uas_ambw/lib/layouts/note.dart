@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:uas_ambw/edit_note.dart';
 
-GestureDetector noteCard(BuildContext context, note) {
+GestureDetector noteCard(BuildContext context, List note) {
   final DateFormat formatter = DateFormat('yyyy-MM-dd HH:mm');
 
   String formatDate(DateTime target) {
@@ -11,8 +11,12 @@ GestureDetector noteCard(BuildContext context, note) {
 
   return GestureDetector(
     onTap: () {
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => EditNote(note: note)));
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                EditNote(note: note)), // Assuming you have an EditNotePage
+      );
     },
     child: Card(
       margin: EdgeInsets.all(8.0),

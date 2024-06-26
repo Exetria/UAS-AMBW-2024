@@ -55,43 +55,54 @@ class _EditNoteState extends State<EditNote> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: navbar(context),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Created: ${formatter.format(widget.note[2])}',
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
-            SizedBox(height: 2.0),
-            Text(
-              'Last updated: ${formatter.format(widget.note[3])}',
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
-            SizedBox(height: 16.0),
-            TextField(
-              controller: titleController..text = widget.note[0],
-              decoration: InputDecoration(
-                labelText: 'Title',
-                border: OutlineInputBorder(),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Text(
+                  "Add Note",
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
               ),
-            ),
-            SizedBox(height: 16.0),
-            TextField(
-              controller: contentController..text = widget.note[1],
-              maxLines: 20, // Allows for multiline content
-              decoration: InputDecoration(
-                labelText: 'Content',
-                border: OutlineInputBorder(),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.02,
               ),
-            ),
-          ],
+              Text(
+                'Created: ${formatter.format(widget.note[2])}',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+              SizedBox(height: 2.0),
+              Text(
+                'Last updated: ${formatter.format(widget.note[3])}',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+              SizedBox(height: 16.0),
+              TextField(
+                controller: titleController..text = widget.note[0],
+                decoration: InputDecoration(
+                  labelText: 'Title',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              SizedBox(height: 16.0),
+              TextField(
+                controller: contentController..text = widget.note[1],
+                maxLines: 15, // Allows for multiline content
+                decoration: InputDecoration(
+                  labelText: 'Content',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
-      floatingActionButton: Row( mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          FloatingActionButton(
+      floatingActionButton:
+          Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+        FloatingActionButton(
           onPressed: () {
             deleteNote(context);
           },
@@ -99,7 +110,9 @@ class _EditNoteState extends State<EditNote> {
           child: Icon(Icons.delete),
           backgroundColor: Colors.red,
         ),
-        SizedBox(width: 16,),
+        SizedBox(
+          width: 16,
+        ),
         FloatingActionButton(
           onPressed: () {
             saveNote(context);
@@ -107,8 +120,7 @@ class _EditNoteState extends State<EditNote> {
           tooltip: 'Save',
           child: Icon(Icons.save),
         ),
-        ]
-      ),
+      ]),
     );
   }
 }

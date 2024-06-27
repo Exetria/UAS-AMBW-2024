@@ -12,7 +12,6 @@ class Settings extends StatefulWidget {
 }
 
 class _Settings extends State<Settings> {
-  
   Future<void> changePin(BuildContext context, String newPin) async {
     final box = Hive.box('pin');
 
@@ -175,12 +174,9 @@ class _Settings extends State<Settings> {
                 children: [
                   const CircleAvatar(
                     radius: 40.0,
-                    backgroundImage: NetworkImage(
-                        ''), 
+                    backgroundImage: NetworkImage(''),
                   ),
-                  SizedBox(
-                      height: MediaQuery.of(context).size.width *
-                          0.03),
+                  SizedBox(height: MediaQuery.of(context).size.width * 0.03),
                   Text(
                     'Hello',
                     style: Theme.of(context).textTheme.headlineMedium,
@@ -200,8 +196,7 @@ class _Settings extends State<Settings> {
                     },
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.symmetric(
-                          horizontal: 40.0,
-                          vertical: 20.0),
+                          horizontal: 40.0, vertical: 20.0),
                     ),
                     child: Text(
                       'Change PIN',
@@ -219,8 +214,7 @@ class _Settings extends State<Settings> {
                     },
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.symmetric(
-                          horizontal: 40.0,
-                          vertical: 20.0),
+                          horizontal: 40.0, vertical: 20.0),
                     ),
                     child: Text(
                       'Log Out',

@@ -43,12 +43,31 @@ class _EditNoteState extends State<EditNote> {
 
     final int id = widget.note[4];
 
-    box.delete(id);
-
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => Home()),
-    );
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              title: Text('Delete This Note?'),
+              content: Column(mainAxisSize: MainAxisSize.min, children: []),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('No'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    box.delete(id);
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => Home()),
+                    );
+                  },
+                  child: Text("Yes"),
+                )
+              ]);
+        });
   }
 
   @override

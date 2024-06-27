@@ -15,7 +15,7 @@ GestureDetector noteCard(BuildContext context, List note) {
         context,
         MaterialPageRoute(
             builder: (context) =>
-                EditNote(note: note)), // Assuming you have an EditNotePage
+                EditNote(note: note)),
       );
     },
     child: Card(

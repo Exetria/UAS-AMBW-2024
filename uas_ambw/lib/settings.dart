@@ -12,6 +12,7 @@ class Settings extends StatefulWidget {
 }
 
 class _Settings extends State<Settings> {
+  
   Future<void> changePin(BuildContext context, String newPin) async {
     final box = Hive.box('pin');
 

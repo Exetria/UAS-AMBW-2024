@@ -90,7 +90,7 @@ class _EditNoteState extends State<EditNote> {
               SizedBox(height: 16.0),
               TextField(
                 controller: contentController..text = widget.note[1],
-                maxLines: 15, // Allows for multiline content
+                maxLines: 15,
                 decoration: InputDecoration(
                   labelText: 'Content',
                   border: OutlineInputBorder(),

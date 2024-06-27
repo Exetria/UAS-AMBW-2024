@@ -85,12 +85,6 @@ class _LoginPage extends State<LoginPage> {
   }
 
   @override
-  void dispose() {
-    pinController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return FutureBuilder(
         future: checkPinExist(),

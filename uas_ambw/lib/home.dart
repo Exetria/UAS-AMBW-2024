@@ -18,9 +18,6 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     notesBox = Hive.box('notes');
-    // Hive.box('notes').clear();
-    // Hive.box('pin').clear();
-    // Hive.box('id').clear();
   }
 
   @override
@@ -115,7 +112,7 @@ class _HomeState extends State<Home> {
         onPressed: () {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => AddNote()), // Assuming you have an AddNotePage
+            MaterialPageRoute(builder: (context) => AddNote()),
           );
         },
         tooltip: 'Add Note',

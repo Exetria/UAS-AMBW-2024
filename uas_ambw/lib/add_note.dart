@@ -57,13 +57,6 @@ class _AddNote extends State<AddNote> {
   }
 
   @override
-  void dispose() {
-    titleController.dispose();
-    contentController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: navbar(context),

@@ -63,7 +63,7 @@ class _EditNoteState extends State<EditNote> {
             children: [
               Center(
                 child: Text(
-                  "Add Note",
+                  "Edit Note",
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
               ),
